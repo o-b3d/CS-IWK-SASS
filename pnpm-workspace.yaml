@@ -1,0 +1,5 @@
+allowBuilds:
+  '@parcel/watcher': false
+  esbuild: true
+  playwright-chromium: false
+  sharp: true

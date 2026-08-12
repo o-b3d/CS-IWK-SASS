@@ -104,6 +104,18 @@ _Not required for light-medium kit usage, but helpful if you want to customise t
 8.  Modify the website files (use `./src`, NOT `./public`) as needed. Use the template file in `content/pages/_template.txt` to get started, or modify the existing pages.
 9.  Deploy using your preferred hosting provider.
 
+### pnpm for this fork
+
+The upstream instructions above use npm. This fork is configured to use pnpm instead. With a supported Node.js installation, run the following commands from the project directory:
+
+```sh
+corepack enable
+pnpm install
+pnpm start
+```
+
+Corepack reads the pnpm version pinned in `package.json`, so contributors use the same package manager version. For the customization scripts below, replace `npm run` with `pnpm run`; for example, use `pnpm run remove-dark-mode` or `pnpm run create-page -- "Page Name"`.
+
 <a name="customization-scripts"></a>
 
 ## Customization Scripts
@@ -217,9 +229,9 @@ The kit is made to support deployment to Netlify out-of-the-box, enabled through
 
 <a name="packagejson-and-package-lockjson"></a>
 
-#### package.json and package-lock.json
+#### package.json and lockfiles
 
-Standard NodeJS package files, containing the dependencies needed for the project to work. The only things worth noting are the `watch:*` and `build:*` scripts in `package.json`. When `npm start` is used, `watch:eleventy` and `watch:cms` (a local Decap CMS proxy server) are run in parallel, with the environment variable `ELEVENTY_ENV` set to `DEV`. When `npm run build` is used, the `ELEVENTY_ENV` variable is set to `PROD`.
+These standard NodeJS package files contain the dependencies needed for the project to work. The upstream template uses `package-lock.json` with npm; this fork uses `pnpm-lock.yaml` with pnpm. The only things worth noting are the `watch:*` and `build:*` scripts in `package.json`. When `npm start` (or `pnpm start` in this fork) is used, `watch:eleventy` and `watch:cms` (a local Decap CMS proxy server) are run in parallel, with the environment variable `ELEVENTY_ENV` set to `DEV`. When `npm run build` (or `pnpm run build` in this fork) is used, the `ELEVENTY_ENV` variable is set to `PROD`.
 
 You may notice around the project (e.g., `./src/config/processors/javascript.js`, `./src/config/processors/sass.js`, and `.eleventy.js`) that there is reference to an `isProduction` variable. This is used to control some functionality that is only run while the website is "in production". For example, when `npm run build` is used, we can assume the website is deployed to a live domain, so we can do things like minify the code. This allows comments to be shown in the dev tools while you're actively working on the site but have them removed, and the code minified, for the smallest file sizes and most efficiency when you deploy it.
 
